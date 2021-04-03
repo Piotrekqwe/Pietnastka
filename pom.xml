@@ -15,23 +15,50 @@
     <maven.compiler.target>11</maven.compiler.target>
 </properties>
 
+<dependencies>
+    <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-controls</artifactId>
+        <version>16-ea+7</version>
+    </dependency>
+    <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-fxml</artifactId>
+        <version>16-ea+7</version>
+    </dependency>
+    <dependency>
+        <groupId>org.jsoup</groupId>
+        <artifactId>jsoup</artifactId>
+        <version>1.13.1</version>
+    </dependency>
+</dependencies>
+
 <build>
     <plugins>
         <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jar-plugin</artifactId>
-            <version>3.1.0</version>
-            <configuration>
-                <archive>
-                    <manifest>
-                        <addClasspath>true</addClasspath>
-                        <classpathPrefix>lib/</classpathPrefix>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-maven-plugin</artifactId>
+            <version>0.0.4</version>
+            <executions>
+                <execution>
+                    <!-- Default configuration for running -->
+                    <id>default-cli</id>
+                    <configuration>
                         <mainClass>SISE.grupa4.Application</mainClass>
-                    </manifest>
-                </archive>
-            </configuration>
+                    </configuration>
+                </execution>
+                <execution>
+                    <!-- Configuration for debugging -->
+                    <id>debug</id>
+                    <configuration>
+                        <options>
+                            <option>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=*:5005</option>
+                        </options>
+                        <mainClass>SISE.grupa4.Application</mainClass>
+                    </configuration>
+                </execution>
+            </executions>
         </plugin>
     </plugins>
 </build>
-
 </project>
