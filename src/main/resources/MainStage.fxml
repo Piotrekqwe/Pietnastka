@@ -13,6 +13,7 @@
         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     </rowConstraints>
    <children>
-      <Button mnemonicParsing="false" onAction="#fun" text="fun" GridPane.halignment="CENTER" />
+      <Button mnemonicParsing="false" onAction="#bfs" text="bfs" GridPane.halignment="CENTER" />
+      <Button mnemonicParsing="false" onAction="#dfs" text="dfs" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
    </children>
 </GridPane>
