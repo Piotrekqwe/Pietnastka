@@ -10,10 +10,11 @@ public class NodeManager {
         ArrayList<Node> tempList = new ArrayList<>();
         ArrayList<Node> newTempList = new ArrayList<>();
         int[] x = new int[target.getConfiguration().length];
-        for (int i = 0; i < x.length; i++) {
-            x[i] = i;
+        for (int i = 0; i < x.length - 1; i++) {
+            x[i] = i + 1;
         }
-        tempList.add(new Node(x, target.getWidth(), 0, "", 0));
+        x[x.length - 1] = 0;
+        tempList.add(new Node(x, target.getWidth(), x.length - 1, "", 0));
 
         for (int i = 0; i < maxDepth; i++) {
             for (Node node : tempList) {
@@ -39,10 +40,11 @@ public class NodeManager {
     public static Node DFS(Node target, int maxDepth) {
         HashMap<Node, Node> hashMap = new HashMap<>();
         int[] x = new int[target.getConfiguration().length];
-        for (int i = 0; i < x.length; i++) {
-            x[i] = i;
+        for (int i = 0; i < x.length - 1; i++) {
+            x[i] = i + 1;
         }
-        Node starterNode = new Node(x, target.getWidth(), 0, "", 0);
+        x[x.length - 1] = 0;
+        Node starterNode = new Node(x, target.getWidth(), x.length - 1, "", 0);
         Node temp = DFSRecursive(target, starterNode, maxDepth, hashMap);
         if (temp != null) return temp;
         return target;
@@ -95,7 +97,6 @@ public class NodeManager {
         }
     }
 
-
     private static void check(HashMap<Node, Node> hashMap, TreeSet<ScoredNode> movesList, Node node, Method method){
         if (hashMap.containsKey(node)) {
             if(hashMap.get(node).getDepth() > node.getDepth()){
@@ -112,23 +113,19 @@ public class NodeManager {
 
     public static Node AStar(Node startingPoint, int maxDepth, Method method){
         HashMap<Node, Node> hashMap = new HashMap<>();
-        TreeSet<ScoredNode> movesList = new TreeSet<>(new Comparator<ScoredNode>() {
-            @Override
-            public int compare(ScoredNode o1, ScoredNode o2) {
-                if(o1.getScore() < o2.getScore()){
-                    return -1;
-                }
-                return 1;
+        TreeSet<ScoredNode> movesList = new TreeSet<>((o1, o2) -> {
+            if (o1.getScore() < o2.getScore()) {
+                return -1;
             }
-
+            return 1;
         });
-        //Comparator<ScoredNode> comparator = Comparator.comparing(ScoredNode::getScore);
 
         int[] x = new int[startingPoint.getConfiguration().length];
-        for (int i = 0; i < x.length; i++) {
-            x[i] = i;
+        for (int i = 0; i < x.length - 1; i++) {
+            x[i] = i + 1;
         }
-        Node target = new Node(x, startingPoint.getWidth(), 0, "", 0);
+        x[x.length - 1] = 0;
+        Node target = new Node(x, startingPoint.getWidth(), x.length - 1, "", 0);
         movesList.add(new ScoredNode(startingPoint, method.score(startingPoint)));
         hashMap.put(startingPoint, startingPoint);
         Node node;

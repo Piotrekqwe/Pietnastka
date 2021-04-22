@@ -102,4 +102,16 @@ public class Node {
                 ", depth=" + depth +
                 '}';
     }
+
+    public void reversePath() {
+        StringBuilder sb = new StringBuilder(path);
+        sb.reverse();
+
+        String result = sb.toString().replace('U', 'X');
+        result = result.replace('D', 'U');
+        result = result.replace('X', 'D');
+        result = result.replace('L', 'X');
+        result = result.replace('R', 'L');
+        path = result.replace('X', 'R');
+    }
 }
