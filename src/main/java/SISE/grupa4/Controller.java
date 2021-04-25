@@ -2,59 +2,70 @@ package SISE.grupa4;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TextField;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
+    public TextField filePathField;
+    public TextField resultFilePathField;
+    public TextField metadataFilePathField;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
 
     @FXML
-    void bfs(){
-        int[] x = { 2, 0, 3, 4,
-                    1, 5, 6, 15,
-                    9, 11, 7, 8,
-                    13, 10, 14, 12};
-        Node target = new Node(x, 4, 1, "", 0);
+    void bfs() {
+        Node target = Utils.getData(filePathField.getText());
 
         System.out.println(PuzzleService.check(target));
 
-        Node result = NodeManager.BFS(target, 25);
-        result.reversePath();
+        Metadata result = MetadataNodeManager.BFS(target, 25);
+        result.node.reversePath();
         System.out.println(result);
+        System.out.println(result.node);
+
+        Utils.saveResult(result, resultFilePathField.getText(), metadataFilePathField.getText());
     }
 
-    public void dfs( ) {
-        int[] x = { 2, 0, 3, 4,
-                    1, 5, 6, 15,
-                    9, 11, 7, 8,
-                    13, 10, 14, 12};
-        Node target = new Node(x, 4, 1, "", 0);
-        Node result = NodeManager.DFS(target, 25);
-        result.reversePath();
+    public void dfs() {
+        Node target = Utils.getData(filePathField.getText());
+
+        System.out.println(PuzzleService.check(target));
+
+        Metadata result = MetadataNodeManager.DFS(target, 25);
+        result.node.reversePath();
         System.out.println(result);
+        System.out.println(result.node);
+
+        Utils.saveResult(result, resultFilePathField.getText(), metadataFilePathField.getText());
     }
 
     public void hamming() {
-        int[] x = { 2, 0, 3, 4,
-                    1, 5, 6, 15,
-                    9, 11, 7, 8,
-                    13, 10, 14, 12};
-        Node startingPoint = new Node(x, 4, 1, "", 0);
-        Node result = NodeManager.AStar(startingPoint, 25, Method.HAMMING);
+        Node startingPoint = Utils.getData(filePathField.getText());
+
+        System.out.println(PuzzleService.check(startingPoint));
+
+        Metadata result = MetadataNodeManager.AStar(startingPoint, 25, Method.HAMMING);
         System.out.println(result);
+        System.out.println(result.node);
+
+        Utils.saveResult(result, resultFilePathField.getText(), metadataFilePathField.getText());
     }
 
     public void manhattan() {
-        int[] x = { 2, 0, 3, 4,
-                    1, 5, 6, 15,
-                    9, 11, 7, 8,
-                    13, 10, 14, 12};
-        Node startingPoint = new Node(x, 4, 1, "", 0);
-        Node result = NodeManager.AStar(startingPoint, 25, Method.MANHATTAN);
+        Node startingPoint = Utils.getData(filePathField.getText());
+
+        System.out.println(PuzzleService.check(startingPoint));
+
+        Metadata result = MetadataNodeManager.AStar(startingPoint, 25, Method.MANHATTAN);
         System.out.println(result);
+        System.out.println(result.node);
+
+        Utils.saveResult(result, resultFilePathField.getText(), metadataFilePathField.getText());
     }
 }

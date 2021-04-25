@@ -38,5 +38,11 @@ public class PuzzleService {
         return count % 2 == 0;
     }
 
+    public static int getPosition(int[] configuration){
+        for (int i = 0; i < configuration.length; i++) {
+            if (configuration[i] == 0) return i;
+        }
+        return 0;
+    }
 
 }
