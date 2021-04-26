@@ -1,8 +1,10 @@
 package SISE.grupa4;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
 import java.net.URL;
@@ -12,6 +14,7 @@ public class Controller implements Initializable {
     public TextField filePathField;
     public TextField resultFilePathField;
     public TextField metadataFilePathField;
+    public Text canBeSolvedDisplay;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -67,5 +70,11 @@ public class Controller implements Initializable {
         System.out.println(result.node);
 
         Utils.saveResult(result, resultFilePathField.getText(), metadataFilePathField.getText());
+    }
+
+    public void check() {
+        Node node = Utils.getData(filePathField.getText());
+        if(PuzzleService.check(node)) canBeSolvedDisplay.setText(filePathField.getText() + " can be solved");
+        else canBeSolvedDisplay.setText(filePathField.getText() + " cannot be solved");
     }
 }
