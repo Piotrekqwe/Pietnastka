@@ -18,7 +18,6 @@ public class Controller implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
     }
 
     @FXML
@@ -27,7 +26,7 @@ public class Controller implements Initializable {
 
         System.out.println(PuzzleService.check(target));
 
-        Metadata result = MetadataNodeManager.BFS(target, 25);
+        Metadata result = MetadataNodeManager.BFS(target, 25, new Direction[]{Direction.LEFT, Direction.RIGHT, Direction.UP, Direction.DOWN});
         result.node.reversePath();
         System.out.println(result);
         System.out.println(result.node);
@@ -40,7 +39,7 @@ public class Controller implements Initializable {
 
         System.out.println(PuzzleService.check(target));
 
-        Metadata result = MetadataNodeManager.DFS(target, 25);
+        Metadata result = MetadataNodeManager.DFS(target, 25, new Direction[]{Direction.LEFT, Direction.RIGHT, Direction.UP, Direction.DOWN});
         result.node.reversePath();
         System.out.println(result);
         System.out.println(result.node);
@@ -53,7 +52,7 @@ public class Controller implements Initializable {
 
         System.out.println(PuzzleService.check(startingPoint));
 
-        Metadata result = MetadataNodeManager.AStar(startingPoint, 25, Method.HAMMING);
+        Metadata result = MetadataNodeManager.AStar(startingPoint, 25, Method.HAMMING, new Direction[]{Direction.LEFT, Direction.RIGHT, Direction.UP, Direction.DOWN});
         System.out.println(result);
         System.out.println(result.node);
 
@@ -65,7 +64,7 @@ public class Controller implements Initializable {
 
         System.out.println(PuzzleService.check(startingPoint));
 
-        Metadata result = MetadataNodeManager.AStar(startingPoint, 25, Method.MANHATTAN);
+        Metadata result = MetadataNodeManager.AStar(startingPoint, 25, Method.MANHATTAN, new Direction[]{Direction.LEFT, Direction.RIGHT, Direction.UP, Direction.DOWN});
         System.out.println(result);
         System.out.println(result.node);
 
@@ -74,7 +73,7 @@ public class Controller implements Initializable {
 
     public void check() {
         Node node = Utils.getData(filePathField.getText());
-        if(PuzzleService.check(node)) canBeSolvedDisplay.setText(filePathField.getText() + " can be solved");
+        if (PuzzleService.check(node)) canBeSolvedDisplay.setText(filePathField.getText() + " can be solved");
         else canBeSolvedDisplay.setText(filePathField.getText() + " cannot be solved");
     }
 }

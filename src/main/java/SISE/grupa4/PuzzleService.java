@@ -33,8 +33,6 @@ public class PuzzleService {
             count += (node.getConfiguration().length - node.getPosition()) / 4 % 2;
         }
 
-        System.out.println(count);
-        //check if node is solvable
         return count % 2 == 0;
     }
 

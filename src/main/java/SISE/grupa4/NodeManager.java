@@ -4,7 +4,7 @@ import java.util.*;
 
 public class NodeManager {
 
-    public static Node BFS(Node target, int maxDepth) {
+    public static Node BFS(Node target, int maxDepth, Direction[] directions) {
         HashSet<Node> hashSet = new HashSet<>();
         ArrayList<Node> tempList = new ArrayList<>();
         ArrayList<Node> newTempList = new ArrayList<>();
@@ -22,10 +22,10 @@ public class NodeManager {
                         return node;
                     }
                     hashSet.add(node);
-                    if (node.canMoveLeft()) newTempList.add(node.moveLeft());
-                    if (node.canMoveRight()) newTempList.add(node.moveRight());
-                    if (node.canMoveUp()) newTempList.add(node.moveUp());
-                    if (node.canMoveDown()) newTempList.add(node.moveDown());
+                    if (directions[0].canMove(node)) newTempList.add(directions[0].move(node));
+                    if (directions[1].canMove(node)) newTempList.add(directions[1].move(node));
+                    if (directions[2].canMove(node)) newTempList.add(directions[2].move(node));
+                    if (directions[3].canMove(node)) newTempList.add(directions[3].move(node));
                 }
             }
             tempList = new ArrayList<>(newTempList);
@@ -36,7 +36,7 @@ public class NodeManager {
         return target;
     }
 
-    public static Node DFS(Node target, int maxDepth) {
+    public static Node DFS(Node target, int maxDepth, Direction[] directions) {
         HashMap<Node, Node> hashMap = new HashMap<>();
         int[] x = new int[target.getConfiguration().length];
         for (int i = 0; i < x.length - 1; i++) {
@@ -44,12 +44,12 @@ public class NodeManager {
         }
         x[x.length - 1] = 0;
         Node starterNode = new Node(x, target.getWidth(), x.length - 1, "", 0);
-        Node temp = DFSRecursive(target, starterNode, maxDepth, hashMap);
+        Node temp = DFSRecursive(target, starterNode, maxDepth, hashMap, directions);
         if (temp != null) return temp;
         return target;
     }
 
-    private static Node DFSRecursive(Node target, Node node, int depthLeft, HashMap<Node, Node> hashMap) {
+    private static Node DFSRecursive(Node target, Node node, int depthLeft, HashMap<Node, Node> hashMap, Direction[] directions) {
         if (hashMap.containsKey(node)) {
             if(hashMap.get(node).getDepth() > node.getDepth()){
                 hashMap.remove(node);
@@ -65,13 +65,13 @@ public class NodeManager {
         depthLeft--;
         if (depthLeft > 0) {
             Node temp = null;
-            if (node.canMoveLeft()) temp = DFSRecursive(target, node.moveLeft(), depthLeft, hashMap);
+            if (directions[0].canMove(node)) temp = DFSRecursive(target, directions[0].move(node), depthLeft, hashMap, directions);
             if (temp != null) return temp;
-            if (node.canMoveRight()) temp = DFSRecursive(target, node.moveRight(), depthLeft, hashMap);
+            if (directions[1].canMove(node)) temp = DFSRecursive(target, directions[1].move(node), depthLeft, hashMap, directions);
             if (temp != null) return temp;
-            if (node.canMoveUp()) temp = DFSRecursive(target, node.moveUp(), depthLeft, hashMap);
+            if (directions[2].canMove(node)) temp = DFSRecursive(target, directions[2].move(node), depthLeft, hashMap, directions);
             if (temp != null) return temp;
-            if (node.canMoveDown()) temp = DFSRecursive(target, node.moveDown(), depthLeft, hashMap);
+            if (directions[3].canMove(node)) temp = DFSRecursive(target, directions[3].move(node), depthLeft, hashMap, directions);
             return temp;
         }
 
@@ -110,7 +110,7 @@ public class NodeManager {
         }
     }
 
-    public static Node AStar(Node startingPoint, int maxDepth, Method method){
+    public static Node AStar(Node startingPoint, int maxDepth, Method method, Direction[] directions){
         HashMap<Node, Node> hashMap = new HashMap<>();
         TreeSet<ScoredNode> movesList = new TreeSet<>((o1, o2) -> {
             if (o1.getScore() < o2.getScore()) {
@@ -136,10 +136,10 @@ public class NodeManager {
             }
 
             if(node.getDepth() < maxDepth){
-                if (node.canMoveLeft()) check(hashMap, movesList, node.moveLeft(), method);
-                if (node.canMoveRight()) check(hashMap, movesList, node.moveRight(), method);
-                if (node.canMoveUp()) check(hashMap, movesList, node.moveUp(), method);
-                if (node.canMoveDown()) check(hashMap, movesList, node.moveDown(), method);
+                if (directions[0].canMove(node)) check(hashMap, movesList, directions[0].move(node), method);
+                if (directions[1].canMove(node)) check(hashMap, movesList, directions[1].move(node), method);
+                if (directions[2].canMove(node)) check(hashMap, movesList, directions[2].move(node), method);
+                if (directions[3].canMove(node)) check(hashMap, movesList, directions[3].move(node), method);
             }
         }
         return startingPoint;

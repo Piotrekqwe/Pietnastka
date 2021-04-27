@@ -32,46 +32,6 @@ public class Node {
         return Arrays.hashCode(configuration);
     }
 
-    public boolean canMoveLeft(){
-        return position % width > 0;
-    }
-    public Node moveLeft(){
-        int[] nextConfiguration = Arrays.copyOf(configuration, configuration.length);
-        nextConfiguration[position] = configuration[position - 1];
-        nextConfiguration[position - 1] = 0;
-        return new Node(nextConfiguration, width, position - 1, path + "L", depth + 1);
-    }
-
-    public boolean canMoveRight(){
-        return position % width < width - 1;
-    }
-    public Node moveRight(){
-        int[] nextConfiguration = Arrays.copyOf(configuration, configuration.length);
-        nextConfiguration[position] = configuration[position + 1];
-        nextConfiguration[position + 1] = 0;
-        return new Node(nextConfiguration, width, position + 1, path + "R", depth + 1);
-    }
-
-    public boolean canMoveUp(){
-        return position >= width;
-    }
-    public Node moveUp(){
-        int[] nextConfiguration = Arrays.copyOf(configuration, configuration.length);
-        nextConfiguration[position] = configuration[position - width];
-        nextConfiguration[position - width] = 0;
-        return new Node(nextConfiguration, width, position - width, path + "U", depth + 1);
-    }
-
-    public boolean canMoveDown(){
-        return position < configuration.length - width;
-    }
-    public Node moveDown(){
-        int[] nextConfiguration = Arrays.copyOf(configuration, configuration.length);
-        nextConfiguration[position] = configuration[position + width];
-        nextConfiguration[position + width] = 0;
-        return new Node(nextConfiguration, width, position + width, path + "D", depth + 1);
-    }
-
     public int[] getConfiguration() {
         return configuration;
     }
@@ -119,3 +79,4 @@ public class Node {
         path = result.replace('X', 'R');
     }
 }
+

@@ -1,8 +1,5 @@
 package SISE.grupa4;
 
-
-import static java.lang.Math.sqrt;
-
 public enum Method {
     HAMMING {
         @Override
