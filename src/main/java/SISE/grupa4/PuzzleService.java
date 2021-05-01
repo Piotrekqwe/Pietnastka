@@ -1,7 +1,7 @@
 package SISE.grupa4;
 
 public class PuzzleService {
-
+    public static int MAX_DEPTH = 20;
 
     public static boolean check(Node node) {
         //check if node is a rectangle
@@ -43,4 +43,23 @@ public class PuzzleService {
         return 0;
     }
 
+    public static Direction[] getDirections(String s){
+        Direction[] directions = new Direction[4];
+        for (int i = 0; i < 4; i++) {
+            switch (s.getBytes()[i]) {
+                case 'L':
+                    directions[i] = Direction.LEFT;
+                    break;
+                case 'R':
+                    directions[i] = Direction.RIGHT;
+                    break;
+                case 'U':
+                    directions[i] = Direction.UP;
+                    break;
+                case 'D':
+                    directions[i] = Direction.DOWN;
+            }
+        }
+        return directions;
+    }
 }

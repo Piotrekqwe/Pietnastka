@@ -28,25 +28,11 @@ public class CmdApplication {
                 return;
         }
 
-        Direction[] directions = new Direction[4];
+        Direction[] directions = new Direction[0];
         Method method = null;
         if (strategy != A_STAR && args[1].length() == 4 && args[1].contains("L")
                 && args[1].contains("R") && args[1].contains("U") && args[1].contains("D")) {
-            for (int i = 0; i < 4; i++) {
-                switch (args[1].getBytes()[i]) {
-                    case 'L':
-                        directions[i] = Direction.LEFT;
-                        break;
-                    case 'R':
-                        directions[i] = Direction.RIGHT;
-                        break;
-                    case 'U':
-                        directions[i] = Direction.UP;
-                        break;
-                    case 'D':
-                        directions[i] = Direction.DOWN;
-                }
-            }
+            directions = PuzzleService.getDirections(args[1]);
         } else if (strategy == A_STAR) {
             if (args[1].equals("manh")) {
                 method = Method.MANHATTAN;
@@ -76,21 +62,21 @@ public class CmdApplication {
 
         switch (strategy) {
             case BFS:
-                result = MetadataNodeManager.BFS(target, 25, directions);
+                result = MetadataNodeManager.BFS(target, PuzzleService.MAX_DEPTH, directions);
                 result.node.reversePath();
                 break;
             case DFS:
-                result = MetadataNodeManager.DFS(target, 25, directions);
+                result = MetadataNodeManager.DFS(target, PuzzleService.MAX_DEPTH, directions);
                 result.node.reversePath();
                 break;
             case A_STAR:
-                result = MetadataNodeManager.AStar(target, 25, method, new Direction[]{Direction.LEFT, Direction.RIGHT, Direction.UP, Direction.DOWN});
+                result = MetadataNodeManager.AStar(target, PuzzleService.MAX_DEPTH, method, new Direction[]{Direction.LEFT, Direction.RIGHT, Direction.UP, Direction.DOWN});
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + strategy);
         }
 
-        Utils.saveResult(result, "result.txt", "metadata.txt");
+        Utils.saveResult(result, args[3], args[4]);
     }
 
     enum Strategy {

@@ -1,12 +1,10 @@
 package SISE.grupa4;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -14,6 +12,7 @@ public class Controller implements Initializable {
     public TextField filePathField;
     public TextField resultFilePathField;
     public TextField metadataFilePathField;
+    public TextField searchOrderField;
     public Text canBeSolvedDisplay;
 
     @Override
@@ -26,7 +25,15 @@ public class Controller implements Initializable {
 
         System.out.println(PuzzleService.check(target));
 
-        Metadata result = MetadataNodeManager.BFS(target, 25, new Direction[]{Direction.LEFT, Direction.RIGHT, Direction.UP, Direction.DOWN});
+        Direction[] directions;
+        String order = searchOrderField.getText();
+        if (order.length() == 4 && order.contains("L") && order.contains("R") && order.contains("U") && order.contains("D")) {
+            directions = PuzzleService.getDirections(order);
+        } else {
+            directions = new Direction[]{Direction.LEFT, Direction.RIGHT, Direction.UP, Direction.DOWN};
+        }
+
+        Metadata result = MetadataNodeManager.BFS(target, PuzzleService.MAX_DEPTH, directions);
         result.node.reversePath();
         System.out.println(result);
         System.out.println(result.node);
@@ -39,7 +46,15 @@ public class Controller implements Initializable {
 
         System.out.println(PuzzleService.check(target));
 
-        Metadata result = MetadataNodeManager.DFS(target, 25, new Direction[]{Direction.LEFT, Direction.RIGHT, Direction.UP, Direction.DOWN});
+        Direction[] directions;
+        String order = searchOrderField.getText();
+        if (order.length() == 4 && order.contains("L") && order.contains("R") && order.contains("U") && order.contains("D")) {
+            directions = PuzzleService.getDirections(order);
+        } else {
+            directions = new Direction[]{Direction.LEFT, Direction.RIGHT, Direction.UP, Direction.DOWN};
+        }
+
+        Metadata result = MetadataNodeManager.DFS(target, PuzzleService.MAX_DEPTH, directions);
         result.node.reversePath();
         System.out.println(result);
         System.out.println(result.node);
@@ -52,7 +67,15 @@ public class Controller implements Initializable {
 
         System.out.println(PuzzleService.check(startingPoint));
 
-        Metadata result = MetadataNodeManager.AStar(startingPoint, 25, Method.HAMMING, new Direction[]{Direction.LEFT, Direction.RIGHT, Direction.UP, Direction.DOWN});
+        Direction[] directions;
+        String order = searchOrderField.getText();
+        if (order.length() == 4 && order.contains("L") && order.contains("R") && order.contains("U") && order.contains("D")) {
+            directions = PuzzleService.getDirections(order);
+        } else {
+            directions = new Direction[]{Direction.LEFT, Direction.RIGHT, Direction.UP, Direction.DOWN};
+        }
+
+        Metadata result = MetadataNodeManager.AStar(startingPoint, PuzzleService.MAX_DEPTH, Method.HAMMING, directions);
         System.out.println(result);
         System.out.println(result.node);
 
@@ -64,7 +87,15 @@ public class Controller implements Initializable {
 
         System.out.println(PuzzleService.check(startingPoint));
 
-        Metadata result = MetadataNodeManager.AStar(startingPoint, 25, Method.MANHATTAN, new Direction[]{Direction.LEFT, Direction.RIGHT, Direction.UP, Direction.DOWN});
+        Direction[] directions;
+        String order = searchOrderField.getText();
+        if (order.length() == 4 && order.contains("L") && order.contains("R") && order.contains("U") && order.contains("D")) {
+            directions = PuzzleService.getDirections(order);
+        } else {
+            directions = new Direction[]{Direction.LEFT, Direction.RIGHT, Direction.UP, Direction.DOWN};
+        }
+
+        Metadata result = MetadataNodeManager.AStar(startingPoint, PuzzleService.MAX_DEPTH, Method.MANHATTAN, directions);
         System.out.println(result);
         System.out.println(result.node);
 
