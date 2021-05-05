@@ -53,16 +53,16 @@ public class MetadataNodeManager {
         return metadata;
     }
 
-    public static Metadata DFS(Node target, int maxDepth, Direction[] directions) {
+    public static Metadata DFS(Node starterNode, int maxDepth, Direction[] directions) {
         Metadata metadata = new Metadata();
         metadata.time = System.nanoTime();
         HashMap<Node, Node> hashMap = new HashMap<>();
-        int[] x = new int[target.getConfiguration().length];
+        int[] x = new int[starterNode.getConfiguration().length];
         for (int i = 0; i < x.length - 1; i++) {
             x[i] = i + 1;
         }
         x[x.length - 1] = 0;
-        Node starterNode = new Node(x, target.getWidth(), x.length - 1, "", 0);
+        Node target = new Node(x, starterNode.getWidth(), x.length - 1, "", 0);
         Node temp = DFSRecursive(target, starterNode, maxDepth, hashMap, directions);
         metadata.time = (System.nanoTime() - metadata.time) / 1000000;
 

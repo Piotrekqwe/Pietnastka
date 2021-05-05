@@ -8,7 +8,6 @@ public enum Method {
             for (int i = 0; i < node.getConfiguration().length - 1; i++){
                 if(node.getConfiguration()[i] != i + 1) result++;
             }
-            if(node.getConfiguration()[node.getConfiguration().length - 1] != 0) result++;
             return result;
         }
     },
@@ -16,11 +15,10 @@ public enum Method {
         @Override
         int score(Node node) {
             int result = 0;
-            int temp;
             int distance;
             for (int i = 0; i < node.getConfiguration().length; i++){
                 int val = node.getConfiguration()[i];
-                if(val == 0) val = node.getConfiguration().length;
+                if(val == 0) continue;
                 if(val != i + 1) {
                     distance = val % node.getWidth() - (i + 1) % node.getWidth();
                     val -= distance * node.getWidth();
