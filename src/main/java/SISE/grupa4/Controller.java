@@ -55,7 +55,7 @@ public class Controller implements Initializable {
         }
 
         Metadata result = MetadataNodeManager.DFS(target, PuzzleService.MAX_DEPTH, directions);
-        result.node.reversePath();
+        //result.node.reversePath();
         System.out.println(result);
         System.out.println(result.node);
 

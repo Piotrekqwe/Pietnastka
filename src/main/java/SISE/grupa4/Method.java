@@ -18,12 +18,11 @@ public enum Method {
             int distance;
             for (int i = 0; i < node.getConfiguration().length; i++){
                 int val = node.getConfiguration()[i];
-                if(val == 0) continue;
-                if(val != i + 1) {
-                    distance = val % node.getWidth() - (i + 1) % node.getWidth();
-                    val -= distance * node.getWidth();
+                if(val != i + 1 && val != 0) {
+                    distance = (val - 1) % node.getWidth() - (i) % node.getWidth();
+                    val -= distance;
                     distance = Math.abs(distance);
-                    distance += Math.abs(val - (i + 1));
+                    distance += Math.abs((val - (i + 1)) % node.getWidth());
                     result += distance;
                 }
             }

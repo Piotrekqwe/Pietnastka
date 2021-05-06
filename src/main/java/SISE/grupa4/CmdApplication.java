@@ -67,7 +67,7 @@ public class CmdApplication {
                 break;
             case DFS:
                 result = MetadataNodeManager.DFS(target, PuzzleService.MAX_DEPTH, directions);
-                result.node.reversePath();
+                //result.node.reversePath();
                 break;
             case A_STAR:
                 result = MetadataNodeManager.AStar(target, PuzzleService.MAX_DEPTH, method, new Direction[]{Direction.LEFT, Direction.RIGHT, Direction.UP, Direction.DOWN});
