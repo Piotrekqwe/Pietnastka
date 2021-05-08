@@ -1,5 +1,7 @@
 package SISE.grupa4;
 
+import static java.lang.Math.abs;
+
 public enum Method {
     HAMMING {
         @Override
@@ -15,15 +17,14 @@ public enum Method {
         @Override
         int score(Node node) {
             int result = 0;
-            int distance;
             for (int i = 0; i < node.getConfiguration().length; i++){
-                int val = node.getConfiguration()[i];
-                if(val != i + 1 && val != 0) {
-                    distance = (val - 1) % node.getWidth() - (i) % node.getWidth();
-                    val -= distance;
-                    distance = Math.abs(distance);
-                    distance += Math.abs((val - (i + 1)) % node.getWidth());
-                    result += distance;
+                int val = node.getConfiguration()[i] - 1;
+                if(val != i && val >= 0) {
+                    int vh = val / node.getWidth();
+                    int vw = val % node.getWidth();
+                    int h = i / node.getWidth();
+                    int w = i % node.getWidth();
+                    result += abs(h - vh) + abs(w - vw);
                 }
             }
             return result;

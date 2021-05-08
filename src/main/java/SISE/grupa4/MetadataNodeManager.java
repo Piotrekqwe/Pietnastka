@@ -74,6 +74,7 @@ public class MetadataNodeManager {
 
         metadata.processedStates = hashMap.size() - 1;
         metadata.metStates = hashMap.size();
+        metadata.maxDepth = metadata.node.getDepth();
         for (Node node : hashMap.values()) {
             if(node.getDepth() > metadata.maxDepth) metadata.maxDepth = node.getDepth();
         }
