@@ -18,7 +18,6 @@ public class MetadataNodeManager {
         tempList.add(new Node(x, target.getWidth(), x.length - 1, "", 0));
 
         for (int i = 0; i < maxDepth; i++) {
-            int tempListSize = tempList.size();
             for (Node node : tempList) {
                 if (!hashSet.contains(node)) {
                     if (node.equals(target)) {
@@ -32,7 +31,7 @@ public class MetadataNodeManager {
                             if (!hashSet.contains(node)) temp++;
                         }
                         metadata.metStates = temp + hashSet.size();
-                        metadata.processedStates = hashSet.size() + tempListSize - tempList.size();
+                        metadata.processedStates = hashSet.size();
                         metadata.maxDepth = node.getDepth();
                         return metadata;
                     }
@@ -50,6 +49,8 @@ public class MetadataNodeManager {
         metadata.time = (System.nanoTime() - metadata.time) / 1000000;
         metadata.node = target;
         metadata.node.setDepth(-1);
+        metadata.metStates = hashSet.size() + tempList.size();
+        metadata.processedStates = hashSet.size();
         return metadata;
     }
 
@@ -72,8 +73,8 @@ public class MetadataNodeManager {
             metadata.node.setDepth(-1);
         }
 
-        metadata.processedStates = hashMap.size() - 1;
-        metadata.metStates = hashMap.size();
+        metadata.processedStates = hashMap.size();
+        metadata.metStates = hashMap.size() + 1;
         metadata.maxDepth = metadata.node.getDepth();
         for (Node node : hashMap.values()) {
             if(node.getDepth() > metadata.maxDepth) metadata.maxDepth = node.getDepth();
@@ -164,12 +165,12 @@ public class MetadataNodeManager {
 
         while (!movesList.isEmpty()) {
             node = movesList.pollFirst().getNode();
-            metadata.processedStates++;
             if (node.equals(target)) {
 
                 metadata.time = (System.nanoTime() - metadata.time) / 1000000;
                 metadata.node = node;
                 metadata.metStates = hashMap.size();
+                metadata.processedStates = hashMap.size() - movesList.size();
 
                 for (Node n : hashMap.values()) {
                     if(n.getDepth() > metadata.maxDepth) metadata.maxDepth = n.getDepth();
@@ -188,6 +189,8 @@ public class MetadataNodeManager {
         metadata.time = (System.nanoTime() - metadata.time) / 1000000;
         metadata.node = startingPoint;
         metadata.node.setDepth(-1);
+        metadata.metStates = hashMap.size();
+        metadata.processedStates = metadata.metStates;
         return metadata;
     }
 

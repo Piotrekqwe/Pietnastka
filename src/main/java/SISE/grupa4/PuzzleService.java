@@ -1,6 +1,9 @@
 package SISE.grupa4;
 
 public class PuzzleService {
+    private PuzzleService() {
+    }
+
     public static int MAX_DEPTH = 20;
 
     public static boolean check(Node node) {
